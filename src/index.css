@@ -3,3 +3,29 @@ html, body, :global(#root) {
   height: 100%;
 }
 
+.wrapper{
+  width: 500px;
+  margin: 20px auto;
+  border: 1px solid #ddd;
+  border-radius:3px;
+  padding: 20px;
+  background-color: #fefefe;
+}
+
+.comment-input{
+  background-color: #FFf;
+  border: 1px solid #ddd;
+  padding: 20px;
+}
+
+.comment-list{
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  padding: 20px;
+}
+.comment-tab{
+  min-height: 50px;
+  border-bottom: 1px solid #ddd;
+  padding-top: 10px;
+  display: flex;
+}

@@ -39,17 +39,17 @@ import UserModal from './UserModal'
            render: text => <a href="">{text}</a>,
          },
        {
-         title: 'Email',
+           title: 'Email',
            dataIndex: 'email',
            key: 'email',
          },
        {
-         title: 'Website',
+           title: 'Website',
            dataIndex: 'website',
            key: 'website',
          },
        {
-         title: 'Operation',
+           title: 'Operation',
            key: 'operation',
            //render: (text, { id }) => (
            render: (id, record) => (
@@ -101,7 +101,6 @@ import UserModal from './UserModal'
            total,
            page,
        };
-    return{}
    }
 
  export default connect(mapStateToProps)(Users);
