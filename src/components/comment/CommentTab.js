@@ -1,5 +1,7 @@
 import React,{ Component } from 'react';
-import PropTypes from "prop-types"
+import PropTypes from "prop-types";
+import { connect } from 'dva';
+import { message } from 'antd';
 class CommentTab extends Component{
   static defaultProps ={
     comment:''
@@ -30,9 +32,20 @@ class CommentTab extends Component{
     })
   }
   handleDeleteComment(event){
-    if(this.props.onDeleteComment){
-      this.props.onDeleteComment(this.props.index)
-    }
+    const { dispatch,comment } = this.props
+    console.log(comment)
+    dispatch({
+      type:'comment/remove',
+      payload:{id:comment.id}
+    }).then(({data})=>{
+      //console.log(data)
+      if(data.code === "000"){
+        message.success(data.data);
+      }
+    });
+    // if(this.props.onDeleteComment){
+    //   this.props.onDeleteComment(this.props.index)
+    // }
   }
   render(){
     //console.log(this.props.comment)
@@ -50,4 +63,4 @@ class CommentTab extends Component{
     )
   }
 }
-export default CommentTab;
+export default connect()(CommentTab);

@@ -1,14 +1,19 @@
 import { connect } from 'dva';
-import { Table, Pagination, Popconfirm, Button } from 'antd';
+import { Table, Pagination, Popconfirm, Button, message} from 'antd';
 import { routerRedux } from "dva/router"
 import UserModal from './UserModal'
  const PAGE_SIZE =5;
  function Users({ dispatch,list: dataSource, loading,total, page: current }) {
      function deleteHandler(id) {
-         console.warn(`TODO: ${id}`);
+        // console.warn(`TODO: ${id}`);
          dispatch({
            type:'users/remove',
            payload:id
+         }).then(({data})=>{
+           if(data.code === "000"){
+             message.success("删除成功");
+             dispatch({ type:'users/reload'})
+           }
          })
      };
      function pageChangeHandler (page){
@@ -18,17 +23,25 @@ import UserModal from './UserModal'
        }))
      };
       function editHandler(id,values){
-        console.log(values)
         dispatch({
           type:'users/patch',
           payload:{ id,values }
+        }).then(({data})=>{
+          if(data.code === "000"){
+            message.success("修改成功")
+            dispatch({ type:'users/reload'})
+          }
         })
       }
       function createHandler(values){
-        console.log(values)
         dispatch({
           type:'users/create',
           payload:values
+        }).then(({data})=>{
+          if(data.code === "000"){
+            message.success("添加成功")
+            dispatch({ type:'users/reload'})
+          }
         })
       }
      const columns = [
@@ -55,7 +68,7 @@ import UserModal from './UserModal'
            render: (id, record) => (
              <span >
                <UserModal record={ record } onOk={ editHandler.bind(null,record.id) }>
-                 <a >Edit</a>
+                 <a style={{"marginRight":10}}>Edit</a>
                </UserModal>
                <Popconfirm title="Confirm to delete?" onConfirm={deleteHandler.bind(null, id)}>
                  <a href="">Delete</a>

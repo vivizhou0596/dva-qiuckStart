@@ -24,10 +24,11 @@ export default {
       });
     },
     *create({payload:values},{call,put}){
-      console.log(values)
-      yield call(commentService.create, values);
-      yield put({ type:'fetch'})
+      return yield call(commentService.create, values);
     },
+    *remove({payload:values},{call,put}){
+      return yield call(commentService.remove, values);
+    }
   },
   subscriptions: {
     setup({ dispatch, history }) {

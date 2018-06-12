@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'dva';
 import PropTypes from "prop-types"
-import { Input,Row, Col, Button } from 'antd';
+import { Input,Row, Col, Button , message} from 'antd';
 const { TextArea } = Input;
 class CommentInput extends Component{
   static propTypes = {
@@ -55,15 +55,19 @@ class CommentInput extends Component{
         userName,
         content,
         createTime:+new Date()}
+    }).then(({data})=>{
+      console.log(data)
+      if(data.code === "000"){
+        message.success(data.data);
+        dispatch({
+          type:'comment/fetch',
+        })
+      }else{
+        message.error('新增失败');
+      }
+    }).catch((err)=>{
+      console.error(err)
     })
-    // if(this.props.onSubmit){
-    //   const {userName,content} = this.state
-    //   this.props.onSubmit({
-    //     userName,
-    //     content,
-    //     createTime:+new Date()
-    //   })
-    // }
     this.setState({ content:'' })
   }
   render(){

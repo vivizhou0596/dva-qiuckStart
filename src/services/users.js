@@ -5,19 +5,21 @@ export function fetch({ page = 1 }) {
 }
 
 export function remove(id) {
-  return request(`/api/users?id=${id}`);
-}
-
-export function patch(id,values) {
-  return request(`/api/users?id=${id}`,{
+  return request(`/api/users/remove`,{
     method:'POST',
-    body:JSON.stringify(values)
+    body:JSON.stringify(id)
   });
 }
 
+export function patch(id,values) {
+  return request(`/api/users/patch`,{
+    method:'POST',
+    body:JSON.stringify({id,values})
+  });
+}
 
 export function create(values) {
-  return request(`/api/users`,{
+  return request(`/api/users/create`,{
     method:'POST',
     body:JSON.stringify(values)
   });

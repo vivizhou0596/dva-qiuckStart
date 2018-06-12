@@ -13,32 +13,26 @@ export default {
   },
   effects: {
     *fetch({ payload: { page = 1 } = {}}, { call, put }) {
-      const { data:{data}, headers } = yield call(usersService.fetch, { page });
-      console.log(data)
+      const result = yield call(usersService.fetch, { page });
+      let data = result.data.data;
+      let total = result.data.total;
       yield put({
                  type: 'save',
                  payload: {
                      data,
-                     total: parseInt(headers['x-total-count'], 10),
+                     total,
                      page: parseInt(page, 10),
                    },
              });
     },
     *remove({payload:{id}},{ call, put }){
-      console.log( id )
-      yield call(usersService.remove, id);
-      //const page =yield select(state=>state.users.page);
-      yield put({ type:'reload'})
+      return yield call(usersService.remove, id);
     },
     *patch({payload:{id,values}},{ call,put }){
-       yield call(usersService.patch, id,values);
-       //const page = yield select(state=>state.users.page);
-        yield put({ type:'reload'})
+       return yield call(usersService.patch, id,values);
     },
     *create({payload:values},{call,put}){
-      console.log(values)
-      yield call(usersService.create, values);
-      yield put({ type:'reload'})
+      return yield call(usersService.create, values);
     },
     *reload(action,{put,select}){
       const page = yield select(state=>state.users.page);

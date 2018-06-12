@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from "prop-types"
 import CommentTab from './CommentTab'
+
 class CommentList extends Component{
   static defaultProps={
     comments : []
